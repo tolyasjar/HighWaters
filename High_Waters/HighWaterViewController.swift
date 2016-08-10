@@ -16,7 +16,7 @@ class HighWaterViewController: UIViewController,CLLocationManagerDelegate, MKMap
     var container: CKContainer!
     var publicDB: CKDatabase!
     var privateDB: CKDatabase!
-
+    
     @IBOutlet weak var mapView: MKMapView!
     
     var locationManager :CLLocationManager!
@@ -93,20 +93,19 @@ class HighWaterViewController: UIViewController,CLLocationManagerDelegate, MKMap
     }
     
     
+    
     func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         
-        if let annotationView = views.first {
+        // Distinguish the user location annotation from the rest of the annotations
+        for index in 0...views.count-1 {
             
-            if let annotation = annotationView.annotation {
-                if annotation is MKUserLocation {
-                    
-                    let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 650, 650)
+        if   (views[index].annotation! is MKUserLocation) {
+            
+                    let region = MKCoordinateRegionMakeWithDistance(views.first!.annotation!.coordinate, 650, 650)
                     self.mapView.setRegion(region, animated: true)
                     
                 }
-            }
         }
-        
     }
 
     
